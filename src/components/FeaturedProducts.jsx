@@ -64,7 +64,7 @@ const FeaturedProducts = () => {
   return (
     <div className="p-4 sm:p-8">
       <h2 className="text-2xl font-bold mb-8">Destacados</h2>
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 sm:gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-6">
         {featuredProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

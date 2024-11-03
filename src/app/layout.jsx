@@ -4,6 +4,7 @@ import "./globals.css";
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import AdminNavbar from "@/components/AdminSidebar";
+import { CartProvider } from "@/context/CartContext";
 
 
 const openSans = Nunito({
@@ -17,8 +18,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={openSans.className}>
-        {pathname.startsWith("/admin") ? <AdminNavbar /> : <Navbar />}
-        {children}
+        <CartProvider>
+          {pathname.startsWith("/admin") ? <AdminNavbar /> : <Navbar />}
+          {children}
+        </CartProvider>
       </body>
     </html>
   );

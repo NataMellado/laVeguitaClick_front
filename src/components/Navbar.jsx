@@ -1,9 +1,15 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { useCart } from "@/context/CartContext";
 
 const Navbar = () => {
+  const { cart } = useCart();
+
+  const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <>
       <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between py-2 px-4 shadow-md bg-white">
@@ -33,9 +39,13 @@ const Navbar = () => {
           {/* Cart */}
           <button className="flex px-3 py-2 text-sm font-semibold text-gray-700 transition duration-150 hover:text-green-600">
             <FontAwesomeIcon icon={faCartShopping} style={{ width: '20px', height: '20px' }} />
-            <span className="absolute top-2 right-4 w-4 h-4 text-xs text-white bg-red-600 rounded-full flex items-center justify-center">
-              3
-            </span>
+            
+            {/* Cantidad de productos en el carrito */}
+            {totalQuantity > 0 && (
+              <span className="absolute top-2 right-4 w-4 h-4 text-xs text-white bg-red-600 rounded-full flex items-center justify-center">
+                {totalQuantity}
+              </span>
+            )}
           </button>
         </div>
       </nav>
