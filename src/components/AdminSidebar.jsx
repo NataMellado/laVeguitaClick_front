@@ -28,7 +28,7 @@ const AdminSidebar = () => {
             </Link>
           </li>
           <li>
-            <Link href="/admin/añadir-producto" className="flex items-center gap-3 text-gray-300 hover:text-white">
+            <Link href="/admin/anadir-producto" className="flex items-center gap-3 text-gray-300 hover:text-white">
               <FontAwesomeIcon icon={faPlus} style={{ width: '20px', height: '20px' }} />
               <span>Añadir Producto</span>
             </Link>

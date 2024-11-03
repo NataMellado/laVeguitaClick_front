@@ -1,65 +1,19 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react";
 import ProductCard from "./ProductCard";
 
 const FeaturedProducts = () => {
-  const featuredProducts = [
-    {
-      id: 1,
-      name: "Producto A",
-      image: "/images/product-a.jpg",
-      description: "Descripción del producto A",
-      price: 1200,
-    },
-    {
-      id: 2,
-      name: "Producto B",
-      image: "/images/product-b.jpg",
-      description: "Descripción del producto B",
-      price: 1990,
-    },
-    {
-      id: 3,
-      name: "Producto C",
-      image: "/images/product-c.jpg",
-      description: "Descripción del producto C",
-      price: 1500,
-    },
-    {
-      id: 4,
-      name: "Producto D",
-      image: "/images/product-d.jpg",
-      description: "Descripción del producto D",
-      price: 1800,
-    },
-    {
-      id: 5,
-      name: "Producto E",
-      image: "/images/product-e.jpg",
-      description: "Descripción del producto E",
-      price: 2100,
-    },
-    {
-      id: 6,
-      name: "Producto F",
-      image: "/images/product-f.jpg",
-      description: "Descripción del producto F",
-      price: 2200,
-    },
-    {
-      id: 7,
-      name: "Producto G",
-      image: "/images/product-g.jpg",
-      description: "Descripción del producto G",
-      price: 2300,
-    },
-    {
-      id: 8,
-      name: "Producto H",
-      image: "/images/product-h.jpg",
-      description: "Descripción del producto H",
-      price: 2400,
-    },
-  ];
+  const [featuredProducts, setFeaturedProducts] = React.useState([]);
+
+  useEffect(() => {
+    fetch('http://127.0.0.1:8000/api/products/')
+      .then((res) => res.json())
+      .then((data) => {
+        const featuredProducts = data.products.filter((product) => product.is_featured);
+        setFeaturedProducts(featuredProducts);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <div className="p-4 sm:p-8">
