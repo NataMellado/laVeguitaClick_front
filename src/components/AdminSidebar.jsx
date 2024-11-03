@@ -9,7 +9,7 @@ const AdminSidebar = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 h-full w-64 bg-gray-800 text-white flex flex-col shadow-lg">
+    <div className="fixed top-0 left-0 h-full  bg-gray-800 text-white flex flex-col shadow-lg">
       
       {/* Logo */}
       <div className="flex items-center justify-center h-16 bg-gray-900">

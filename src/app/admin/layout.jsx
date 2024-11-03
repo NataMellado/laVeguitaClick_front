@@ -9,7 +9,7 @@ export default function AdminLayout({ children }) {
       <div className="flex">
     
    
-        <main className="flex-1 p-8">
+        <main className="flex-1 p-8 ms-[12rem]">
           {children}
         </main>
       </div>
