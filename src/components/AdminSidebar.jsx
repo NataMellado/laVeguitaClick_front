@@ -1,12 +1,11 @@
-// src/components/Navbar/AdminSidebar.jsx
 import React from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTachometerAlt, faPlus, faWarehouse, faHandHoldingUsd, faClipboardList, faTruck, faShoppingCart, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTachometerAlt, faPlus, faWarehouse, faHandHoldingUsd, faClipboardList, faTruck, faShoppingCart, faSignOutAlt, faUsers } from "@fortawesome/free-solid-svg-icons";
 
 const AdminSidebar = () => {
-    const handleLogout = () => {
-        console.log("Logout");
+  const handleLogout = () => {
+    console.log("Logout");
   };
 
   return (
@@ -56,6 +55,12 @@ const AdminSidebar = () => {
             <Link href="/admin/transporte" className="flex items-center gap-3 text-gray-300 hover:text-white">
               <FontAwesomeIcon icon={faTruck} style={{ width: '20px', height: '20px' }}/>
               <span>Transporte</span>
+            </Link>
+          </li>
+          <li>
+            <Link href="/admin/usuarios" className="flex items-center gap-3 text-gray-300 hover:text-white">
+              <FontAwesomeIcon icon={faUsers} style={{ width: '20px', height: '20px' }}/>
+              <span>Usuarios</span>
             </Link>
           </li>
           <li>
