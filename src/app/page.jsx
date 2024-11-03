@@ -1,10 +1,11 @@
 import Image from "next/image";
+import Banner from "@/components/Banner";
 
 export default function Home() {
   return (
     <div>
       <main>
-          <h1>La Veguita Click</h1>
+        <Banner />
       </main>
     </div>
   );
