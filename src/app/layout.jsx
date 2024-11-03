@@ -6,11 +6,9 @@ import Navbar from "@/components/Navbar";
 import AdminNavbar from "@/components/AdminSidebar";
 import { CartProvider } from "@/context/CartContext";
 
-
 const openSans = Nunito({
   subsets: ["latin"],
 });
-
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
