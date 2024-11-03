@@ -1,16 +1,16 @@
 import React from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faCartShopping,  } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 const Navbar = () => {
   return (
     <>
-      <nav className="flex items-center justify-between py-2 px-4 md:shadow-sm">
+      <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between py-2 px-4 shadow-md bg-white">
         {/* Logo */}
         <div className="flex items-center">
-          <a href="/" >
-          <Image src="/logo.png" alt="La Veguita Click" width={100} height={40} />
+          <a href="/">
+            <Image src="/logo.png" alt="La Veguita Click" width={100} height={40} />
           </a>
         </div>
 
@@ -19,16 +19,16 @@ const Navbar = () => {
           <input
             type="text"
             placeholder="Buscar..."
-            className="w-full max-w-md px-4 py-2 text-sm border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600"
+            className="w-full max-w-md px-4 py-2 text-sm border rounded-md border-gray-300 focus:outline-none focus:ring-1 focus:ring-green-600"
           />
         </div>
 
-        {/* Login */}
+        {/* Login y Cart */}
         <div className="flex items-center gap-2 ">
-          <button className="flex gap-2 px-3 py-2 text-sm font-semibold text-gray-700 transition duration-150 hover:text-green-600">
+          <a href="/ingresar" className="flex gap-2 px-3 py-2 text-sm font-semibold text-gray-700 transition duration-150 hover:text-green-600">
             <FontAwesomeIcon icon={faUser} style={{ width: '20px', height: '20px' }} />
             <p className="hidden sm:flex">Ingresar</p>
-          </button>
+          </a>
 
           {/* Cart */}
           <button className="flex px-3 py-2 text-sm font-semibold text-gray-700 transition duration-150 hover:text-green-600">
@@ -40,14 +40,6 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Mobile Search */}
-      <div className="flex md:hidden flex-1 justify-center pb-2 px-4 shadow-sm">
-        <input
-          type="text"
-          placeholder="Buscar..."
-          className="w-full px-4 py-2 text-sm border rounded-md border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-600"
-        />
-      </div>
     </>
   );
 };
