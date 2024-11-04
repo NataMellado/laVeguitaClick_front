@@ -22,9 +22,11 @@ export default function RootLayout({ children }) {
             {pathname.startsWith("/admin") ? (
               <UserContent>{children}</UserContent>
             ) : (
-              <Navbar />
+              <>
+                <Navbar />
+                {children}
+              </>
             )}
-            {children}
           </CartProvider>
         </UserProvider>
       </body>
