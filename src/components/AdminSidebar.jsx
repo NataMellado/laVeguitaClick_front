@@ -2,11 +2,10 @@ import React from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTachometerAlt, faPlus, faWarehouse, faHandHoldingUsd, faClipboardList, faTruck, faShoppingCart, faSignOutAlt, faUsers } from "@fortawesome/free-solid-svg-icons";
+import { useUser } from "@/context/UserContext";
 
 const AdminSidebar = () => {
-  const handleLogout = () => {
-    console.log("Logout");
-  };
+  const { user, logout } = useUser();
 
   return (
     <div className="fixed top-0 left-0 h-full  bg-gray-800 text-white flex flex-col shadow-lg">
@@ -65,7 +64,7 @@ const AdminSidebar = () => {
           </li>
           <li>
             <button
-              onClick={handleLogout}
+              onClick={logout}
               className="flex items-center gap-3 w-full text-left text-gray-300 hover:text-white"
             >
               <FontAwesomeIcon icon={faSignOutAlt} style={{ width: '20px', height: '20px' }}/>

@@ -1,10 +1,11 @@
 "use client";
 import { Nunito } from "next/font/google";
 import "./globals.css";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import AdminNavbar from "@/components/AdminSidebar";
 import { CartProvider } from "@/context/CartContext";
+import { UserProvider, useUser } from "@/context/UserContext";
 
 const openSans = Nunito({
   subsets: ["latin"],
@@ -16,11 +17,33 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={openSans.className}>
-        <CartProvider>
-          {pathname.startsWith("/admin") ? <AdminNavbar /> : <Navbar />}
-          {children}
-        </CartProvider>
+        <UserProvider>
+          <CartProvider>
+            {pathname.startsWith("/admin") ? (
+              <UserContent>{children}</UserContent>
+            ) : (
+              <Navbar />
+            )}
+            {children}
+          </CartProvider>
+        </UserProvider>
       </body>
     </html>
+  );
+}
+
+function UserContent({ children }) {
+  const { user, loading } = useUser();
+
+  if (loading) return <p>Cargando...</p>; // Muestra un mensaje de carga
+  return (
+    <>
+      {user && user.rol === "gerente" ? (
+        <AdminNavbar />
+      ) : (
+        redirect("/ingresar")
+      )}
+      {children}
+    </>
   );
 }
