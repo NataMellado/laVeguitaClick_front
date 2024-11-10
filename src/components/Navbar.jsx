@@ -4,10 +4,12 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "@/context/CartContext";
+import { useUser } from "@/context/UserContext";
 import CartModal from "./CartModal";
 
 const Navbar = () => {
   const { cart } = useCart();
+  const { user, loading } = useUser();
   const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
@@ -34,12 +36,21 @@ const Navbar = () => {
           />
         </div>
 
-        {/* Login y Cart */}
         <div className="flex items-center gap-2 ">
-          <a href="/ingresar" className="flex gap-2 px-3 py-2 text-sm font-semibold text-gray-700 transition duration-150 hover:text-green-600">
-            <FontAwesomeIcon icon={faUser} style={{ width: '20px', height: '20px' }} />
-            <p className="hidden sm:flex p-0 m-0">Ingresar</p>
-          </a>
+          <FontAwesomeIcon icon={faUser} style={{ width: '20px', height: '20px' }} />
+          {/* Login */}
+          {loading ? (
+            <div className="spinner"></div> 
+          ) : user ? (
+            <a href="/perfil" className="flex gap-2 pe-3 py-2 text-sm font-semibold text-gray-700 transition duration-150 hover:text-green-600">
+              <p className="hidden sm:flex p-0 m-0">{user.usuario}</p> {/* Muestra el nombre del usuario */}
+            </a>
+          ) : (
+            <a href="/ingresar" className="flex gap-2 pe-3 py-2 text-sm font-semibold text-gray-700 transition duration-150 hover:text-green-600">
+              <p className="hidden sm:flex p-0 m-0">Ingresar</p>
+            </a>
+          )}
+        
 
           {/* Cart */}
           <button 
