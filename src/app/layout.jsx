@@ -2,8 +2,8 @@
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import { redirect, usePathname } from "next/navigation";
-import Navbar from "@/components/Navbar";
-import AdminNavbar from "@/components/AdminSidebar";
+import Navbar from "../components/Navbar";
+import AdminSidebar from "@/components/AdminSidebar";
 import { CartProvider } from "@/context/CartContext";
 import { UserProvider, useUser } from "@/context/UserContext";
 
@@ -41,7 +41,7 @@ function UserContent({ children }) {
   return (
     <>
       {user && user.rol === "gerente" ? (
-        <AdminNavbar />
+        <AdminSidebar />
       ) : (
         redirect("/ingresar")
       )}
