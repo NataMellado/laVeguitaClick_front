@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import ProductRow from '../../../components/ProductRow';
+import ProductTable from '@/components/ProductTable';
 
 const InventoryManagement = () => {
   const [products, setProducts] = useState([]);
@@ -69,33 +69,19 @@ const InventoryManagement = () => {
   };
 
   return (
-    <div className="inventory-management p-4">
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300 rounded-lg">
-          <thead>
-            <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-              <th className="py-3 px-6 text-left">Nombre</th>
-              <th className="py-3 px-6 text-left">Descripción</th>
-              <th className="py-3 px-6 text-left">Categoría</th>
-              <th className="py-3 px-6 text-left">Precio</th>
-              <th className="py-3 px-6 text-left">Cantidad</th>
-              <th className="py-3 px-6 text-center">Acciones</th>
-            </tr>
-          </thead>
-          <tbody className="text-gray-700 text-sm">
-            {products.map((product) => (
-              <ProductRow
-                key={product.id}
-                product={{ ...product, isEditing: product.id === editingProductId }}
-                handleChange={handleChange}
-                handleEdit={handleEdit}
-                handleSave={handleSave}
-                handleDelete={handleDelete}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className=" overflow-y-hidden">
+      <h1 className="text-md font-bold mb-2">Gestionar Inventario</h1>
+      <ProductTable
+        products={products.map((product) => ({
+          ...product,
+          isEditing: product.id === editingProductId
+        }))}
+        handleChange={handleChange}
+        handleEdit={handleEdit}
+        handleSave={handleSave}
+        handleDelete={handleDelete}
+      />
+
     </div>
   );
 };

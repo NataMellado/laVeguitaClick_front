@@ -13,14 +13,18 @@ const openSans = Nunito({
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
+  const isAdminRoute = pathname.startsWith("/admin");
 
   return (
-    <html lang="en">
-      <body className={openSans.className}>
+    <>
+    <html lang="en" className={isAdminRoute ? "overflow-hidden" : ""}>
+      <body className={openSans.className} >
         <UserProvider>
           <CartProvider>
             {pathname.startsWith("/admin") ? (
-              <UserContent>{children}</UserContent>
+              <UserContent>
+                {children}
+              </UserContent>
             ) : (
               <>
                 <Navbar />
@@ -31,6 +35,7 @@ export default function RootLayout({ children }) {
         </UserProvider>
       </body>
     </html>
+    </>
   );
 }
 

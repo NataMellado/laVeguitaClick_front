@@ -12,78 +12,84 @@ const ProductRow = ({
 }) => {
   return (
     <tr className="border-b border-gray-200 hover:bg-gray-100">
+      
       {/* Nombre */}
-      <td className="py-3 px-6 text-left">
-        <input
-          name="name"
-          type="text"
-          value={product.name}
-          onChange={(e) => handleChange(e, product.id)}
-          disabled={!product.isEditing}
-          className={`p-2 rounded w-full ${
-            product.isEditing ? "bg-gray-200" : "bg-transparent"
-          }`}
-        />
+      <td className="py-3 px-4 text-left">
+      {product.isEditing ? (
+          <input
+            name="name"
+            type="text"
+            value={product.name}
+            onChange={(e) => handleChange(e, product.id)}
+            className="p-2 rounded w-full bg-gray-200"
+          />
+        ) : (
+          <div className="whitespace-nowrap truncate-ellipsis">{product.name}</div>
+        )}
       </td>
 
       {/* Descripción */}
-      <td className="py-3 px-6 text-left">
-        <input
-          name="description"
-          type="text"
-          value={product.description}
-          onChange={(e) => handleChange(e, product.id)}
-          disabled={!product.isEditing}
-          className={`p-2 rounded w-full ${
-            product.isEditing ? "bg-gray-200" : "bg-transparent"
-          }`}
-        />
+      <td className="py-3 px-4 text-left">
+      {product.isEditing ? (
+          <input
+            name="description"
+            type="text"
+            value={product.description}
+            onChange={(e) => handleChange(e, product.id)}
+            className="p-2 rounded w-full bg-gray-200"
+          />
+        ) : (
+          <div className="whitespace-nowrap truncate-ellipsis">{product.description}</div>
+        )}
       </td>
 
       {/* Categoría*/}
-      <td className="py-3 px-6 text-left">
-        <input
-          name="category"
-          type="text"
-          value={product.category}
-          onChange={(e) => handleChange(e, product.id)}
-          disabled={!product.isEditing}
-          className={`p-2 rounded w-full ${
-            product.isEditing ? "bg-gray-200" : "bg-transparent"
-          }`}
-        />
+      <td className="py-3 px-4 text-left">
+      {product.isEditing ? (
+          <input
+            name="category"
+            type="text"
+            value={product.category}
+            onChange={(e) => handleChange(e, product.id)}
+            className="p-2 rounded w-full bg-gray-200"
+          />
+        ) : (
+          <div className="whitespace-nowrap truncate-ellipsis">{product.category}</div>
+        )}
       </td>
 
       {/* Precio */}
-      <td className="py-3 px-6 text-left">
-        <input
-          name="price"
-          type="number"
-          value={product.price}
-          onChange={(e) => handleChange(e, product.id)}
-          disabled={!product.isEditing}
-          className={`p-2 rounded w-full ${
-            product.isEditing ? "bg-gray-200" : "bg-transparent"
-          }`}
-        />
+      <td className="py-3 px-4 text-left">
+      {product.isEditing ? (
+          <input
+            name="price"
+            type="number"
+            value={product.price}
+            onChange={(e) => handleChange(e, product.id)}
+            className="p-2 rounded w-full bg-gray-200"
+          />
+        ) : (
+          <div className="whitespace-nowrap truncate-ellipsis">{product.price}</div>
+        )}
       </td>
 
       {/* Stock */}
-      <td className="py-3 px-6 text-left">
-        <input
-          name="stock"
-          type="number"
-          value={product.stock}
-          onChange={(e) => handleChange(e, product.id)}
-          disabled={!product.isEditing}
-          className={`p-2 rounded w-full ${
-            product.isEditing ? "bg-gray-200" : "bg-transparent"
-          }`}
-        />
+      <td className="py-3 px-4 text-left">
+      {product.isEditing ? (
+          <input
+            name="stock"
+            type="number"
+            value={product.stock}
+            onChange={(e) => handleChange(e, product.id)}
+            className="p-2 rounded w-full bg-gray-200"
+          />
+        ) : (
+          <div className="whitespace-nowrap truncate-ellipsis">{product.stock}</div>
+        )}
       </td>
 
       {/* Botones de acción */}
-      <td className="py-3 px-6 text-center space-x-2">
+      <td className="py-3 px-4 text-center space-x-2">
         {!product.isEditing ? (
           <button
             onClick={(e) => handleEdit(e, product.id)}

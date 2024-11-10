@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import SupplierRow from '../../../components/SupplierRow';
+import SupplierTable from '@/components/SupplierTable';
 
 const SupplierManagement = () => {
   const [suppliers, setSuppliers] = useState([]);
@@ -68,32 +68,19 @@ const SupplierManagement = () => {
   };
 
   return (
-    <div className="supplier-management p-4">
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300 rounded-lg">
-          <thead>
-            <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-              <th className="py-3 px-6 text-left">Nombre</th>
-              <th className="py-3 px-6 text-left">Email</th>
-              <th className="py-3 px-6 text-left">Teléfono</th>
-              <th className="py-3 px-6 text-left">Dirección</th>
-              <th className="py-3 px-6 text-center">Acciones</th>
-            </tr>
-          </thead>
-          <tbody className="text-gray-700 text-sm">
-            {suppliers.map((supplier) => (
-              <SupplierRow
-                key={supplier.id}
-                supplier={{ ...supplier, isEditing: supplier.id === editingSupplierId }}
-                handleChange={handleChange}
-                handleEdit={handleEdit}
-                handleSave={handleSave}
-                handleDelete={handleDelete}
-              />
-            ))}
-          </tbody>
-        </table>
-      </div>
+    <div className="overflow-y-hidden">
+        <h1 className="text-md font-bold mb-2">Gestionar Proveedores</h1>
+        <SupplierTable
+        suppliers={suppliers.map((supplier) => ({
+            ...supplier,
+            isEditing: supplier.id === editingSupplierId
+        }))}
+        handleChange={handleChange}
+        handleEdit={handleEdit}
+        handleSave={handleSave}
+        handleDelete={handleDelete}
+        />
+
     </div>
   );
 };

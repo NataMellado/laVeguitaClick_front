@@ -17,9 +17,9 @@ const AdminSidebar = () => {
   const isActive = (path) => pathname === path;
 
   return (
-    <div>
+    <div className="">
       {/* Navbar superior en pantallas pequeñas */}
-      <div className="sm:hidden bg-teal-900 text-white flex justify-between items-center p-4">
+      <div className="sm:hidden bg-sky-800 text-white flex justify-between items-center p-4">
         <Link href="/admin" className="text-lg font-bold">Admin</Link>
         <button onClick={toggleSidebar}>
           <FontAwesomeIcon icon={faBars} style={{ width: '24px', height: '24px' }} />
@@ -28,7 +28,7 @@ const AdminSidebar = () => {
 
       {/* Menu desplegable en pantallas pequeñas */}
       {isOpen && (
-        <div className="sm:hidden bg-teal-900 text-white shadow-lg p-4 absolute top-14 left-0 w-full z-50">
+        <div className="sm:hidden bg-sky-800 text-white shadow-lg p-4 absolute top-14 left-0 w-full z-50">
           <nav>
             <ul className="space-y-4">
               <li>
@@ -82,13 +82,13 @@ const AdminSidebar = () => {
       )}
 
       {/* Sidebar para pantallas grandes y medianas */}
-      <div className="hidden sm:flex flex-col  fixed top-0 left-0 h-full  bg-teal-900 text-white shadow-lg">
+      <div className="hidden sm:flex flex-col fixed top-2 bottom-2 left-2 w-216 bg-sky-800 text-white shadow-lg rounded-xl">
 
         {/* Render ReactTooltip*/}
         <ReactTooltip id="tooltip" place="right" type="dark" effect="solid" />
         
         {/* Logo */}
-        <div className="flex items-center justify-center h-16 py-1 px-2 bg-teal-900">
+        <div className="flex items-center justify-center h-16 py-1 px-2">
           <Link href="/admin" className="text-l font-bold">
             Admin
           </Link>
@@ -99,47 +99,47 @@ const AdminSidebar = () => {
           <div className="space-y-2 justify-items-center">
 
             {/* Dashboard */}
-            <Link href="/admin" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-200 ${isActive('/admin') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
+            <Link href="/admin" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300 ${isActive('/admin') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
               <FontAwesomeIcon icon={faTachometerAlt} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Dashboard" className="focus:outline-none"/>
             </Link>
 
             {/* Add Product */}
-            <Link href="/admin/anadir-producto" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-200  ${isActive('/admin/anadir-producto') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
+            <Link href="/admin/anadir-producto" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300  ${isActive('/admin/anadir-producto') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
               <FontAwesomeIcon icon={faPlus} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Añadir Producto" className="focus:outline-none"/>
             </Link>
 
             {/* Inventory */}
-            <Link href="/admin/gestionar-inventario" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-200  ${isActive('/admin/gestionar-inventario') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
+            <Link href="/admin/gestionar-inventario" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300  ${isActive('/admin/gestionar-inventario') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
               <FontAwesomeIcon icon={faWarehouse} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Inventario" className="focus:outline-none"/>
             </Link>
 
             {/* Suppliers */}
-            <Link href="/admin/proveedores" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-200  ${isActive('/admin/proveedores') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
+            <Link href="/admin/proveedores" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300  ${isActive('/admin/proveedores') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
               <FontAwesomeIcon icon={faHandHoldingUsd} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Proveedores" className="focus:outline-none"/>
             </Link>
 
             {/* Orders */}
-            <Link href="/admin/ventas" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-200  ${isActive('/admin/ventas') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
+            <Link href="/admin/ventas" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300  ${isActive('/admin/ventas') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
               <FontAwesomeIcon icon={faShoppingCart} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Ventas" className="focus:outline-none"/>
             </Link>
 
             {/* Transport */}
-            <Link href="/admin/transporte" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-200  ${isActive('/admin/transporte') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
+            <Link href="/admin/transporte" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300  ${isActive('/admin/transporte') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
               <FontAwesomeIcon icon={faTruck} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Transporte" className="focus:outline-none"/>
             </Link>
 
             {/* Users */}
-            <Link href="/admin/usuarios" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-200  ${isActive('/admin/usuarios') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
+            <Link href="/admin/usuarios" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300  ${isActive('/admin/usuarios') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
               <FontAwesomeIcon icon={faUsers} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Usuarios" className="focus:outline-none"/>
             </Link>
 
             {/* Página principal */}
-            <Link href="/" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-200  ${isActive('/') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
+            <Link href="/" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300  ${isActive('/') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
               <FontAwesomeIcon icon={faClipboardList} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Página principal" className="focus:outline-none"/>
             </Link>
 
             {/* Logout */}
-            <button onClick={logout} className="flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-200 text-gray-300 hover:text-white">
+            <button onClick={logout} className="flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300 text-gray-300 hover:text-white">
               <FontAwesomeIcon icon={faSignOutAlt} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Cerrar Sesión" className="focus:outline-none"/>
             </button>
           </div>
