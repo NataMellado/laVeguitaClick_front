@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faCartShopping, faTable} from "@fortawesome/free-solid-svg-icons";
 import { useCart } from "@/context/CartContext";
 import { useUser } from "@/context/UserContext";
 import CartModal from "./CartModal";
@@ -20,6 +20,7 @@ const Navbar = () => {
   return (
     <>
       <nav className="fixed top-0 left-0 w-full z-50 flex items-center justify-between py-2 px-4 shadow-md bg-white">
+        
         {/* Logo */}
         <div className="flex items-center">
           <a href="/">
@@ -36,22 +37,33 @@ const Navbar = () => {
           />
         </div>
 
-        <div className="flex items-center gap-2 ">
-          <FontAwesomeIcon icon={faUser} style={{ width: '20px', height: '20px' }} />
+        <div className="flex items-center gap-3 ">
+          
           {/* Login */}
-          {loading ? (
-            <div className="spinner"></div> 
-          ) : user ? (
-            <a href="/perfil" className="flex gap-2 pe-3 py-2 text-sm font-semibold text-gray-700 transition duration-150 hover:text-green-600">
-              <p className="hidden sm:flex p-0 m-0">{user.usuario}</p> {/* Muestra el nombre del usuario */}
-            </a>
-          ) : (
-            <a href="/ingresar" className="flex gap-2 pe-3 py-2 text-sm font-semibold text-gray-700 transition duration-150 hover:text-green-600">
-              <p className="hidden sm:flex p-0 m-0">Ingresar</p>
+          <div className="flex items-center gap-2 px-3 ">
+            {loading ? (
+              <div className="spinner"></div> 
+            ) : (
+              <a
+                href={user ? "/perfil" : "/ingresar"}
+                className="flex gap-2 py-2 text-sm font-semibold text-gray-700 transition duration-150 hover:text-green-600"
+              >
+                <FontAwesomeIcon icon={faUser} style={{ width: '20px', height: '20px' }} />
+                <p className="hidden sm:flex p-0 m-0">
+                  {user ? user.usuario : "Ingresar"}
+                </p>
+              </a>
+            )}
+          </div>
+
+          {/* Enlace al panel de administración */}
+          {user && user.rol === "gerente" && (
+            <a href="/admin" className="flex gap-2 px-3 py-2 text-sm font-semibold text-gray-700 transition duration-150 hover:text-green-600">
+              <FontAwesomeIcon icon={faTable} style={{ width: '20px', height: '20px' }} />
+              <p className="hidden sm:flex p-0 m-0">Admin</p>
             </a>
           )}
         
-
           {/* Cart */}
           <button 
             className="flex px-3 py-2 text-sm font-semibold text-gray-700 transition duration-150 hover:text-green-600"
