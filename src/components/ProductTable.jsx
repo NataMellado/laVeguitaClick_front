@@ -2,7 +2,7 @@ import React from 'react';
 import ProductRow from './ProductRow';
 
 const ProductTable = ({ products, handleChange, handleEdit, handleSave, handleDelete }) => (
-  <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-8rem)] sm:max-h-[calc(100vh-4.5rem)] rounded-lg border border-gray-300 bg-white">
+  <div className="overflow-x-auto overflow-y-auto max-h-[calc(100vh-9rem)] sm:max-h-[calc(100vh-5rem)] rounded-lg border border-gray-300 bg-white">
     <table className="min-w-full">
       <thead>
         <tr className="bg-gray-200 text-gray-600 uppercase text-xs leading-normal">
@@ -15,9 +15,9 @@ const ProductTable = ({ products, handleChange, handleEdit, handleSave, handleDe
         </tr>
       </thead>
       <tbody className="text-gray-700 text-sm">
-        {products.map((product) => (
+        {products.map((product, index) => (
           <ProductRow
-            key={product.id}
+            key={`${product.id}-${index}`}
             product={product}
             handleChange={handleChange}
             handleEdit={handleEdit}

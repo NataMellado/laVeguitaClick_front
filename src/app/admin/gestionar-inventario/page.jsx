@@ -1,10 +1,12 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import ProductTable from '@/components/ProductTable';
+import ProductModal from '@/components/ProductModal';
 
 const InventoryManagement = () => {
   const [products, setProducts] = useState([]);
   const [editingProductId, setEditingProductId] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Cargar datos de productos
   useEffect(() => {
@@ -13,6 +15,14 @@ const InventoryManagement = () => {
       .then((data) => setProducts(data.products))
       .catch((error) => console.error('Error al cargar los productos:', error));
   }, []);
+
+   // Manejar adición de producto desde el modal
+   const handleAddProduct = (newProduct) => {
+    setProducts((prevProducts) => [...prevProducts, newProduct]);
+    setIsModalOpen(false);
+
+
+  };
 
   // Manejar edición de producto
   const handleEdit = (event, id) => {
@@ -69,8 +79,23 @@ const InventoryManagement = () => {
   };
 
   return (
+
     <div className=" overflow-y-hidden">
-      <h1 className="text-md font-bold mb-2">Gestionar Inventario</h1>
+      <div className='flex mb-3'>
+        
+        {/* Título */}
+        <h1 className="text-md font-bold mb-2">Gestionar Inventario</h1>
+        
+        {/* Botón para abrir el modal */}
+        <button 
+          onClick={() => setIsModalOpen(true)}
+          className="bg-sky-600 hover:bg-sky-700 transition-colors duration-300 text-white text-sm font-bold py-1 px-3 rounded ml-auto">
+          Agregar Producto
+        
+        </button>
+      </div>
+
+      {/* Tabla de productos */}
       <ProductTable
         products={products.map((product) => ({
           ...product,
@@ -81,6 +106,14 @@ const InventoryManagement = () => {
         handleSave={handleSave}
         handleDelete={handleDelete}
       />
+
+      {/* Modal para añadir productos */}
+      {isModalOpen && (
+        <ProductModal
+          onClose={() => setIsModalOpen(false)}
+          onAddProduct={handleAddProduct}
+        />
+      )}
 
     </div>
   );

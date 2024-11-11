@@ -31,46 +31,57 @@ const AdminSidebar = () => {
         <div className="sm:hidden bg-sky-800 text-white shadow-lg p-4 absolute top-14 left-0 w-full z-50">
           <nav>
             <ul className="space-y-4">
+
+              {/* Dashboard */}
               <li>
                 <Link href="/admin" className="flex items-center gap-3 text-gray-300 hover:text-white" onClick={closeSidebar}>
                   <FontAwesomeIcon icon={faTachometerAlt} style={{ width: '20px', height: '20px' }} /> Dashboard
                 </Link>
               </li>
-              <li>
-                <Link href="/admin/anadir-producto" className="flex items-center gap-3 text-gray-300 hover:text-white" onClick={closeSidebar}>
-                  <FontAwesomeIcon icon={faPlus} style={{ width: '20px', height: '20px' }} /> Añadir Producto
-                </Link>
-              </li>
+
+              {/* Gestionar Inventario */}
               <li>
                 <Link href="/admin/gestionar-inventario" className="flex items-center gap-3 text-gray-300 hover:text-white" onClick={closeSidebar}>
                   <FontAwesomeIcon icon={faWarehouse} style={{ width: '20px', height: '20px' }} /> Inventario
                 </Link>
               </li>
+
+              {/* Proveedores */}
               <li>
                 <Link href="/admin/proveedores" className="flex items-center gap-3 text-gray-300 hover:text-white" onClick={closeSidebar}>
                   <FontAwesomeIcon icon={faHandHoldingUsd} style={{ width: '20px', height: '20px' }} /> Proveedores
                 </Link>
               </li>
+
+              {/* Ventas */}
               <li>
                 <Link href="/admin/ventas" className="flex items-center gap-3 text-gray-300 hover:text-white" onClick={closeSidebar}>
                   <FontAwesomeIcon icon={faShoppingCart} style={{ width: '20px', height: '20px' }} /> Ventas
                 </Link>
               </li>
+
+              {/* Transporte */}
               <li>
                 <Link href="/admin/transporte" className="flex items-center gap-3 text-gray-300 hover:text-white" onClick={closeSidebar}>
                   <FontAwesomeIcon icon={faTruck} style={{ width: '20px', height: '20px' }} /> Transporte
                 </Link>
               </li>
+
+              {/* Usuarios */}
               <li>
                 <Link href="/admin/usuarios" className="flex items-center gap-3 text-gray-300 hover:text-white" onClick={closeSidebar}>
                   <FontAwesomeIcon icon={faUsers} style={{ width: '20px', height: '20px' }} /> Usuarios
                 </Link>
               </li>
+
+              {/* Página principal */}
               <li>
                 <Link href="/" className="flex items-center gap-3 text-gray-300 hover:text-white" onClick={closeSidebar}>
                   <FontAwesomeIcon icon={faClipboardList} style={{ width: '20px', height: '20px' }} /> Página principal
                 </Link>
               </li>
+
+              {/* Cerrar Sesión */}
               <li>
                 <button onClick={logout} className="flex items-center gap-3 text-gray-300 hover:text-white w-full text-left">
                   <FontAwesomeIcon icon={faSignOutAlt} style={{ width: '20px', height: '20px' }} /> Cerrar Sesión
@@ -103,10 +114,6 @@ const AdminSidebar = () => {
               <FontAwesomeIcon icon={faTachometerAlt} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Dashboard" className="focus:outline-none"/>
             </Link>
 
-            {/* Add Product */}
-            <Link href="/admin/anadir-producto" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300  ${isActive('/admin/anadir-producto') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
-              <FontAwesomeIcon icon={faPlus} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Añadir Producto" className="focus:outline-none"/>
-            </Link>
 
             {/* Inventory */}
             <Link href="/admin/gestionar-inventario" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300  ${isActive('/admin/gestionar-inventario') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
