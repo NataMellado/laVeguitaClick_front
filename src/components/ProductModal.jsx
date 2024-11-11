@@ -1,9 +1,7 @@
 "use client";
+import React, { useState, useEffect } from "react";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-
-const ProductModal = ({ onClose, onAddProduct }) => {
+const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -13,8 +11,6 @@ const ProductModal = ({ onClose, onAddProduct }) => {
     image: "",
     is_featured: false,
   });
-
-  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -41,42 +37,46 @@ const ProductModal = ({ onClose, onAddProduct }) => {
       }
 
       const data = await response.json();
-      console.log("Producto añadido:", data);
 
-      // Llama a onAddProduct para actualizar el inventario
-      onAddProduct(data);
+      // Si la respuesta es exitosa, añadir el producto a la lista
+      if (response.ok) {
+        onAddProduct(data);
+        
+        // Guardar el mensaje en localStorage
+        localStorage.setItem("statusMessage", data.message);
+        localStorage.setItem("statusType", "success");
 
-      // Limpia el formulario después de añadir el producto
-      setFormData({
-        name: "",
-        price: "",
-        description: "",
-        stock: "",
-        category: "",
-        image: "",
-        is_featured: false,
-      });
-
-      // Cierra el modal
-      window.location.href = "/admin/gestionar-inventario";
-      onClose();
+        setFormData({
+          name: "",
+          price: "",
+          description: "",
+          stock: "",
+          category: "",
+          image: "",
+          is_featured: false,
+        });
+        onClose();
+        window.location.href = "/admin/gestionar-inventario";
+      } else {
+        showStatusModal("Error al añadir el producto", "error");
+      }
     } catch (error) {
       console.error("Error:", error);
+      showStatusModal("Error al añadir el producto", "error");
     }
   };
 
   return (
     <div className="fixed  inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white overflow-y-auto p-4 rounded-lg  w-full max-w-md max-h-[90vh]">
-        
         <div className="flex  mb-4">
-            <h1 className="text-md font-bold">Añadir Producto</h1>
-            <button
-              onClick={onClose}
-              className="text-gray-600 hover:text-gray-800 text-xl ml-auto font-bold"
-            >
-                &times;
-            </button>
+          <h1 className="text-md font-bold">Añadir Producto</h1>
+          <button
+            onClick={onClose}
+            className="text-gray-600 hover:text-gray-800 text-xl ml-auto font-bold"
+          >
+            &times;
+          </button>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-3">
@@ -122,7 +122,7 @@ const ProductModal = ({ onClose, onAddProduct }) => {
             />
           </div>
 
-            {/* Stock */}
+          {/* Stock */}
           <div>
             <input
               type="number"
@@ -136,7 +136,7 @@ const ProductModal = ({ onClose, onAddProduct }) => {
             />
           </div>
 
-            {/* Categoría */}
+          {/* Categoría */}
           <div>
             <select
               id="category"
@@ -154,7 +154,7 @@ const ProductModal = ({ onClose, onAddProduct }) => {
             </select>
           </div>
 
-            {/* Imagen */}
+          {/* Imagen */}
           <div>
             <input
               type="text"
@@ -167,6 +167,7 @@ const ProductModal = ({ onClose, onAddProduct }) => {
             />
           </div>
 
+          {/* Producto Destacado */}
           <div>
             <label className="block text-sm font-medium mb-1">
               <input
@@ -181,7 +182,7 @@ const ProductModal = ({ onClose, onAddProduct }) => {
             </label>
           </div>
 
-
+          {/* Botón para añadir producto */}
           <button
             type="submit"
             className="w-full bg-sky-600 text-white font-bold text-sm py-2 px-4 rounded-md hover:bg-sky-700 transition-colors duration-300"
@@ -189,7 +190,6 @@ const ProductModal = ({ onClose, onAddProduct }) => {
             Añadir Producto
           </button>
         </form>
- 
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ const AdminSidebar = () => {
   return (
     <div className="">
       {/* Navbar superior en pantallas pequeñas */}
-      <div className="sm:hidden bg-sky-800 text-white flex justify-between items-center p-4">
+      <div className="sm:hidden bg-sky-700 text-white flex justify-between items-center p-4">
         <Link href="/admin" className="text-lg font-bold">Admin</Link>
         <button onClick={toggleSidebar}>
           <FontAwesomeIcon icon={faBars} style={{ width: '24px', height: '24px' }} />
@@ -28,7 +28,7 @@ const AdminSidebar = () => {
 
       {/* Menu desplegable en pantallas pequeñas */}
       {isOpen && (
-        <div className="sm:hidden bg-sky-800 text-white shadow-lg p-4 absolute top-14 left-0 w-full z-50">
+        <div className="sm:hidden bg-sky-700 text-white shadow-lg p-4 absolute top-14 left-0 w-full z-50">
           <nav>
             <ul className="space-y-4">
 
@@ -93,7 +93,7 @@ const AdminSidebar = () => {
       )}
 
       {/* Sidebar para pantallas grandes y medianas */}
-      <div className="hidden sm:flex flex-col fixed top-2 bottom-2 left-2 w-216 bg-sky-800 text-white shadow-lg rounded-xl">
+      <div className="hidden sm:flex flex-col fixed top-2 bottom-2 left-2 w-216 bg-sky-700 text-white shadow-lg rounded-xl">
 
         {/* Render ReactTooltip*/}
         <ReactTooltip id="tooltip" place="right" type="dark" effect="solid" />

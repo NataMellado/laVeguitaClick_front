@@ -5,6 +5,7 @@ import { faEdit, faSave, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const ProductRow = ({
   product,
+  categories,
   handleChange,
   handleEdit,
   handleSave,
@@ -46,13 +47,19 @@ const ProductRow = ({
       {/* Categoría*/}
       <td className="py-3 px-4 text-left">
       {product.isEditing ? (
-          <input
+          <select
             name="category"
-            type="text"
-            value={product.category}
+            value={product.category || ""} 
             onChange={(e) => handleChange(e, product.id)}
             className="p-2 rounded w-full bg-gray-200"
-          />
+          >
+            <option value="" disabled>Selecciona una categoría</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.name}>
+                {category.name}
+              </option>
+            ))}
+          </select>
         ) : (
           <div className="whitespace-nowrap truncate-ellipsis">{product.category}</div>
         )}
