@@ -4,7 +4,13 @@ import { useUser } from "../../context/UserContext";
 const AdminDashboard = () => {
   const { user, loading } = useUser();
   
-  if (loading) return <p>Cargando...</p>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="spinner"></div>
+      </div>
+    )
+  }
 
   if (!user) {
     return <p>No tienes permisos para acceder a esta página</p>;

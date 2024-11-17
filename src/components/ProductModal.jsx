@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 
 const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
+  const [categories, setCategories] = useState([]);
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -12,6 +13,15 @@ const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
     is_featured: false,
   });
 
+  // Obtener categorías al cargar el componente
+  useEffect(() => {
+    fetch("http://127.0.0.1:8000/api/categories/")
+      .then((res) => res.json())
+      .then((data) => setCategories(data.categories))
+      .catch((error) => console.error("Error al cargar categorías:", error));
+  }, []);
+
+  // Manejar el cambio de entrada
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prevData) => ({
@@ -20,32 +30,21 @@ const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  // Añadir un nuevo producto
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    try {
-      const response = await fetch("http://127.0.0.1:8000/api/products/add/", {
+     fetch("http://127.0.0.1:8000/api/products/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Error al añadir el producto");
-      }
-
-      const data = await response.json();
-
-      // Si la respuesta es exitosa, añadir el producto a la lista
-      if (response.ok) {
+      })
+    .then((res) => res.json())
+    .then((data) => {
         onAddProduct(data);
-        
-        // Guardar el mensaje en localStorage
         localStorage.setItem("statusMessage", data.message);
         localStorage.setItem("statusType", "success");
-
         setFormData({
           name: "",
           price: "",
@@ -57,13 +56,11 @@ const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
         });
         onClose();
         window.location.href = "/admin/gestionar-inventario";
-      } else {
-        showStatusModal("Error al añadir el producto", "error");
-      }
-    } catch (error) {
+      })
+    .catch((error) => {
       console.error("Error:", error);
       showStatusModal("Error al añadir el producto", "error");
-    }
+    });
   };
 
   return (
@@ -147,10 +144,11 @@ const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
               className="w-full mt-1 px-2 py-1 border rounded-md"
             >
               <option value="">Seleccione una categoría</option>
-              <option value="verduras">Verduras</option>
-              <option value="frutas">Frutas</option>
-              <option value="cereales">Cereales y Legumbres</option>
-              <option value="frutos-secos">Frutos Secos y Semillas</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
             </select>
           </div>
 

@@ -27,9 +27,9 @@ const ProductTable = ({ products, handleChange, handleEdit, handleSave, handleDe
           </tr>
         </thead>
         <tbody className="text-gray-700 text-sm">
-          {products.map((product, index) => (
+          {products.map((product) => (
             <ProductRow
-              key={`${product.id}-${index}`}
+              key={product.id}
               product={product}
               categories={categories}
               handleChange={handleChange}

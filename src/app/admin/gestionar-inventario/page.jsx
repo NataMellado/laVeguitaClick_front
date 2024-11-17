@@ -1,111 +1,119 @@
 "use client";
-import React, { useState, useEffect } from 'react';
-import ProductTable from '@/components/ProductTable';
-import ProductModal from '@/components/ProductModal';
-import StatusModal from '@/components/StatusModal';
+import React, { useState, useEffect } from "react";
+import ProductTable from "@/components/ProductTable";
+import ProductModal from "@/components/ProductModal";
+import CategoryModal from "@/components/CategoryModal";
+import StatusModal from "@/components/StatusModal";
+import useStatusModal from "@/hooks/useStatusModal";
+import useEditing from "@/hooks/useEditing";
+import AddDropdown from "@/components/AddDropdown";
 
 const InventoryManagement = () => {
   const [products, setProducts] = useState([]);
-  const [editingProductId, setEditingProductId] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showStatusModal, setShowStatusModal] = useState(false);
-  const [statusMessage, setStatusMessage] = useState('');
-  const [statusType, setStatusType] = useState('');
+  const [originalProducts, setOriginalProducts] = useState([]);
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+
+  // Hooks
+  const { showModal, message, status, showStatusModal, setShowModal } = useStatusModal();
+  const { editingId, isEditing, startEditing, stopEditing } = useEditing();
 
   // Cargar datos de productos
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/products/')
+    fetch("http://127.0.0.1:8000/api/products/")
       .then((res) => res.json())
-      .then((data) => setProducts(data.products))
-      .catch((error) => console.error('Error al cargar los productos:', error));
-      
-      // Recargar el mensaje de localStorage si existe
-      const message = localStorage.getItem('statusMessage');
-      const type = localStorage.getItem('statusType');
-      
-      // Función para mostrar el modal de estado
-      if (message && type) {
-        setStatusMessage(message);
-        setStatusType(type);
-        setShowStatusModal(true);
+      .then((data) =>  {
+        setProducts(data.products);
+        setOriginalProducts(data.products);
+      })
+      .catch((error) => console.error("Error al cargar los productos:", error));
 
-        // Limpiar el mensaje de localStorage
-        localStorage.removeItem('statusMessage');
-        localStorage.removeItem('statusType');
-      };
-    }, []);
+    // Cargar el mensaje de localStorage si existe
+    const message = localStorage.getItem("statusMessage");
+    const status = localStorage.getItem("statusType");
 
-  // Mostrar modal de estado
-  const handleStatusModal = (message, type) => {
-    setStatusMessage(message);
-    setStatusType(type);
-    setShowStatusModal(true);
-  };
+    // Función para mostrar el modal de estado
+    if (message && status) {
+      showStatusModal(message, status);
+      localStorage.removeItem("statusMessage");
+      localStorage.removeItem("statusType");
+    }
+  }, []);
 
-   // Manejar adición de producto desde el modal
-   const handleAddProduct = (newProduct) => {
-    setProducts((prevProducts) => [...prevProducts, newProduct]);
-    setIsModalOpen(false);
-  };
+  // Funciones para abrir cada modal
+  const handleAddProduct = () => setIsProductModalOpen(true);
+  const handleAddCategory = () => setIsCategoryModalOpen(true);
+
+  // Opciones para el dropdown de agregar
+  const addOptions = [
+    { label: "Agregar Producto", onClick: handleAddProduct },
+    { label: "Agregar Categoría", onClick: handleAddCategory },
+  ];
 
   // Manejar edición de producto
   const handleEdit = (event, id) => {
     event.preventDefault();
-    setEditingProductId(id);
+
+    // Cancelar la edición actual y revertir cambios si ya hay un producto en edición
+    if (isEditing && editingId !== null) {
+      const revertedProduct = originalProducts.find(
+        (product) => product.id === editingId
+      );
+      setProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product.id === editingId ? revertedProduct : product
+        )
+      );
+    }
+    startEditing(id);
   };
 
   // Manejar guardado de cambios
   const handleSave = (event, productId) => {
     event.preventDefault();
     const productToSave = products.find((product) => product.id === productId);
-    
-    if (!productToSave.category) {
-      alert("Por favor selecciona una categoría válida.");
-      return;
-    }
 
     fetch(`http://127.0.0.1:8000/api/products/${productId}/`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(productToSave),
     })
       .then((res) => res.json())
       .then((data) => {
-        setEditingProductId(null);
-        setProducts((prevProducts) =>
-          prevProducts.map((product) => 
-            product.id === productId ? { ...product, isEditing: false } : product
+        stopEditing();
+        setOriginalProducts((prevOriginals) =>
+          prevOriginals.map((product) =>
+            product.id === productId ? { ...productToSave } : product
           )
         );
-        handleStatusModal(data.message, 'success');
+        showStatusModal(data.message, data.status);
       })
       .catch((error) => {
-        console.error('Error al guardar el producto:', error);
-        handleStatusModal('Error al guardar el producto', 'error');
+        console.error("Error al guardar el producto:", error);
+        showStatusModal("Error al guardar el producto", "error");
       });
   };
 
   // Manejar eliminación de producto
   const handleDelete = (productId) => {
-    if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+    if (window.confirm("¿Estás seguro de que deseas eliminar este producto?")) {
       fetch(`http://127.0.0.1:8000/api/products/${productId}/`, {
-        method: 'DELETE',
+        method: "DELETE",
       })
-      .then((res) => res.json())
-      .then((data) => {
-          // Filtra el producto eliminado del estado
+        .then((res) => res.json())
+        .then((data) => {
           setProducts((prevProducts) =>
-              prevProducts.filter((product) => product.id !== productId)
+            prevProducts.filter((product) => product.id !== productId)
           );
-          handleStatusModal(data.message, 'success');
-      })
+          showStatusModal(data.message, data.status);
+        })
         .catch((error) => {
-          console.error('Error al eliminar el producto:', error);
-          handleStatusModal('Error al eliminar el producto', 'error');
+          console.error("Error al eliminar el producto:", error);
+          showStatusModal("Error al eliminar el producto", "error");
         });
-    };
+    }
   };
 
   // Manejar cambio en los campos
@@ -118,27 +126,20 @@ const InventoryManagement = () => {
   };
 
   return (
-
     <div className=" overflow-y-hidden">
-      <div className='flex mb-3'>
-        
+      <div className="flex mb-3">
         {/* Título */}
         <h1 className="text-md font-bold mb-2">Gestionar Inventario</h1>
-        
-        {/* Botón para abrir el modal */}
-        <button 
-          onClick={() => setIsModalOpen(true)}
-          className="bg-sky-600 hover:bg-sky-700 transition-colors duration-300 text-white text-sm font-bold py-1 px-3 rounded ml-auto">
-          Agregar Producto
-        
-        </button>
+
+        {/* Dropdown de agregar */}
+        <AddDropdown options={addOptions} />
       </div>
 
       {/* Tabla de productos */}
       <ProductTable
         products={products.map((product) => ({
           ...product,
-          isEditing: product.id === editingProductId
+          isEditing: product.id === editingId,
         }))}
         handleChange={handleChange}
         handleEdit={handleEdit}
@@ -147,22 +148,30 @@ const InventoryManagement = () => {
       />
 
       {/* Modal para añadir productos */}
-      {isModalOpen && (
+      {isProductModalOpen && (
         <ProductModal
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => setIsProductModalOpen(false)}
           onAddProduct={handleAddProduct}
-          showStatusModal={handleStatusModal}
+          showStatusModal={showStatusModal}
+        />
+      )}
+
+      {/* Modal para añadir categorías */}
+      {isCategoryModalOpen && (
+        <CategoryModal
+          onClose={() => setIsCategoryModalOpen(false)}
+          onAddCategory={handleAddCategory}
+          showStatusModal={showStatusModal}
         />
       )}
 
       {/* Modal de estado */}
       <StatusModal
-        message={statusMessage}
-        type={statusType}
-        showModal={showStatusModal}
-        setShowModal={setShowStatusModal}
+        message={message}
+        type={status}
+        showModal={showModal}
+        setShowModal={setShowModal}
       />
-
     </div>
   );
 };

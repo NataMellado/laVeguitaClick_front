@@ -51,7 +51,7 @@ const SupplierRow = ({
         {supplier.isEditing ? (
           <input
             name="phone"
-            type="text"
+            type="number"
             value={supplier.phone}
             onChange={(e) => handleChange(e, supplier.id)}
             disabled={!supplier.isEditing}
