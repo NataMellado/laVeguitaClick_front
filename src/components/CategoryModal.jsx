@@ -39,7 +39,7 @@ const CategoryModal = ({ onClose, onAddCategory, showStatusModal }) => {
       localStorage.setItem("statusType", data.status);
       setFormData({ name: "" });
       onClose();
-      window.location.href = "/admin/gestionar-inventario";
+      window.location.href = "/admin/productos";
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -67,7 +67,7 @@ const CategoryModal = ({ onClose, onAddCategory, showStatusModal }) => {
         localStorage.setItem("statusMessage", data.message);
         localStorage.setItem("statusType", data.status);
         onClose();
-        window.location.href = "/admin/gestionar-inventario";
+        window.location.href = "/admin/productos";
       })
     .catch((error) => {
       showStatusModal(error.message, "error");

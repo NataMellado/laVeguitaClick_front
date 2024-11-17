@@ -39,10 +39,10 @@ const AdminSidebar = () => {
                 </Link>
               </li>
 
-              {/* Gestionar Inventario */}
+              {/* Productos */}
               <li>
-                <Link href="/admin/gestionar-inventario" className="flex items-center gap-3 text-gray-300 hover:text-white" onClick={closeSidebar}>
-                  <FontAwesomeIcon icon={faWarehouse} style={{ width: '20px', height: '20px' }} /> Inventario
+                <Link href="/admin/productos" className="flex items-center gap-3 text-gray-300 hover:text-white" onClick={closeSidebar}>
+                  <FontAwesomeIcon icon={faWarehouse} style={{ width: '20px', height: '20px' }} /> Productos
                 </Link>
               </li>
 
@@ -116,8 +116,8 @@ const AdminSidebar = () => {
 
 
             {/* Inventory */}
-            <Link href="/admin/gestionar-inventario" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300  ${isActive('/admin/gestionar-inventario') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
-              <FontAwesomeIcon icon={faWarehouse} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Inventario" className="focus:outline-none"/>
+            <Link href="/admin/productos" className={`flex ps-3 w-full rounded-l-[1rem] ms-6 py-2 transition-colors duration-300  ${isActive('/admin/productos') ? 'bg-gray-100 text-gray-800' : 'text-gray-300'}`}>
+              <FontAwesomeIcon icon={faWarehouse} style={{ width: '20px', height: '20px' }} data-tooltip-id="tooltip" data-tooltip-content="Productos" className="focus:outline-none"/>
             </Link>
 
             {/* Suppliers */}

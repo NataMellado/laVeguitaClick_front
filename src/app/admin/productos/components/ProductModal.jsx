@@ -55,7 +55,7 @@ const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
           is_featured: false,
         });
         onClose();
-        window.location.href = "/admin/gestionar-inventario";
+        window.location.href = "/admin/productos";
       })
     .catch((error) => {
       console.error("Error:", error);
