@@ -1,3 +1,4 @@
+import { data } from "autoprefixer";
 import { useState } from "react";
 
 const useProductManagement = ({
@@ -88,7 +89,14 @@ const useProductManagement = ({
     fetch(`http://127.0.0.1:8000/api/products/${productId}/`, {
       method: "DELETE",
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((data) => {
+            throw { message: data.message, status: data.status };
+          });
+        }
+        return res.json();
+      })
       .then((data) => {
         setProducts((prevProducts) =>
           prevProducts.filter((product) => product.id !== productId)
@@ -96,8 +104,7 @@ const useProductManagement = ({
         showStatusModal(data.message, data.status);
       })
       .catch((error) => {
-        console.error("Error al eliminar el producto:", error);
-        showStatusModal("Error al eliminar el producto", "error");
+        showStatusModal(error.message || "Error desconocido", error.status || "error");
       });
   };
 

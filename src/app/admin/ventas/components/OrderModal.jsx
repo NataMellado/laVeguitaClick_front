@@ -177,7 +177,7 @@ const OrderModal = ({ onClose, onAddOrder, showStatusModal }) => {
 
           {/* Total */}
           <div className="text-right font-bold text-lg">
-            Total: ${total.toFixed(2)}
+            Total: ${total.toFixed(0)}
           </div>
 
           <button
