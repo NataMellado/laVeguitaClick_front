@@ -48,6 +48,13 @@ const useSupplierManagement = ({
   const handleSave = (event, supplierId) => {
     event.preventDefault();
     const supplierToSave = suppliers.find((supplier) => supplier.id === supplierId);
+    const originalSupplier = originalSuppliers.find((supplier) => supplier.id === supplierId);
+
+    if (JSON.stringify(supplierToSave) === JSON.stringify(originalSupplier)) {
+      showStatusModal("No se han realizado cambios", "info");
+      stopEditing();
+      return;
+    }
 
     fetch(`http://127.0.0.1:8000/api/suppliers/${supplierId}/`, {
       method: "PUT",

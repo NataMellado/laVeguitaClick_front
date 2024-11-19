@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 // Componentes
 import ProductTable from "./components/ProductTable";
 import ProductModal from "./components/ProductModal";
-import CategoryModal from "@/components/CategoryModal";
+import CategoryModal from "./components/CategoryModal";
 import StatusModal from "@/components/StatusModal";
 import ConfirmModal from "@/components/ConfirmModal";
 

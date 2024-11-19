@@ -28,6 +28,7 @@ const SupplierModal = ({ onClose, onAddSupplier, showStatusModal }) => {
       },
       body: JSON.stringify(formData),
     })
+
       .then((res) => res.json())
       .then((data) => {
         onAddSupplier(data);

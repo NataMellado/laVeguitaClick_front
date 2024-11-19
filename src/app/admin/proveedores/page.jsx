@@ -54,7 +54,7 @@ const SupplierManagement = () => {
     <div className="overflow-y-hidden">
       <div className='flex mb-3'>
         {/* Tìtulo */}
-        <h1 className="text-md font-bold mb-2">Gestionar Proveedores</h1>
+        <h1 className="text-md font-bold mb-2">Proveedores</h1>
 
         {/* Botón de añadir proveedor */}
         <CustomButton

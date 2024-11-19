@@ -53,6 +53,13 @@ const useProductManagement = ({
   const handleSave = (event, productId) => {
     event.preventDefault();
     const productToSave = products.find((product) => product.id === productId);
+    const originalProduct = originalProducts.find((product) => product.id === productId);
+
+    if (JSON.stringify(productToSave) === JSON.stringify(originalProduct)) {
+      showStatusModal("No se han realizado cambios", "info");
+      stopEditing();
+      return;
+    }
 
     fetch(`http://127.0.0.1:8000/api/products/${productId}/`, {
       method: "PUT",
