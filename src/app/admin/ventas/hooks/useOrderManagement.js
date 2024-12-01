@@ -4,7 +4,7 @@ const useOrderManagement = ({
   orders,
   setOrders,
   originalOrders,
-  setOriginalOrders,
+  fetchOrders,
   showStatusModal,
   startEditing,
   stopEditing,
@@ -66,10 +66,7 @@ const useOrderManagement = ({
       .then((res) => res.json())
       .then((data) => {
         if (data.status === "success" && data.order) {
-          const updateOrders = (orders) =>
-            orders.map((order) => (order.id === orderId ? data.order : order));
-          setOrders(updateOrders);
-          setOriginalOrders(updateOrders);
+          fetchOrders();
         }
         stopEditing();
         showStatusModal(data.message, data.status);
@@ -105,12 +102,12 @@ const useOrderManagement = ({
     })
       .then((res) => res.json())
       .then((data) => {
-        setOrders((prevOrders) =>
-          prevOrders.filter((order) => order.id !== orderId)
-        );
+        stopEditing();
+        fetchOrders();
         showStatusModal(data.message, data.status);
       })
       .catch((error) => {
+        stopEditing();
         console.error("Error al eliminar la orden:", error);
         showStatusModal("Error al eliminar la orden", "error");
       });

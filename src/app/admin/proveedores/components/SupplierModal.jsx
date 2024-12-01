@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-const SupplierModal = ({ onClose, onAddSupplier, showStatusModal }) => {
+const SupplierModal = ({ onClose, fetchSuppliers, showStatusModal }) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -31,9 +31,8 @@ const SupplierModal = ({ onClose, onAddSupplier, showStatusModal }) => {
 
       .then((res) => res.json())
       .then((data) => {
-        onAddSupplier(data);
-        localStorage.setItem("statusMessage", data.message);
-        localStorage.setItem("statusType", "success");
+        fetchSuppliers();
+        showStatusModal(data.message, data.status);
         setFormData({
           name: "",
           email: "",
@@ -41,7 +40,6 @@ const SupplierModal = ({ onClose, onAddSupplier, showStatusModal }) => {
           address: "",
         });
         onClose();
-        window.location.href = "/admin/proveedores";
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -55,12 +53,12 @@ const SupplierModal = ({ onClose, onAddSupplier, showStatusModal }) => {
         <div className="flex  mb-4">
           
           {/* Tìtulo */}
-          <h1 className="text-md font-bold">Añadir proveedor</h1>
+          <h1 className="text-md font-semibold">Añadir proveedor</h1>
           
           {/* Botón para cerrar */}
           <button
             onClick={onClose}
-            className="text-gray-600 hover:text-gray-800 text-xl ml-auto font-bold"
+            className="text-gray-600 hover:text-gray-800 text-xl ml-auto font-semibold"
           >
             &times;
           </button>
@@ -126,7 +124,7 @@ const SupplierModal = ({ onClose, onAddSupplier, showStatusModal }) => {
           {/* Botón para añadir proveedor */}
           <button
             type="submit"
-            className="w-full bg-sky-600 text-white font-bold text-sm py-2 px-4 rounded-md hover:bg-sky-700 transition-colors duration-300"
+            className="w-full bg-sky-600 text-white font-semibold text-sm py-2 px-4 rounded-md hover:bg-sky-700 transition-colors duration-300"
           >
             Añadir proveedor
           </button>

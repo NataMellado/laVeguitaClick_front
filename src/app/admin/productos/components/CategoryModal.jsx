@@ -1,17 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 
-const CategoryModal = ({ onClose, onAddCategory, showStatusModal }) => {
+const CategoryModal = ({ onClose, fetchCategories, showStatusModal, categories }) => {
   const [formData, setFormData] = useState({ name: "" });
-  const [categories, setCategories] = useState([]);
-
-  // Obtener categorías al cargar el componente
-  useEffect(() => {
-      fetch("http://127.0.0.1:8000/api/categories/")
-        .then((res) => res.json())
-        .then((data) => setCategories(data.categories))
-        .catch((error) => console.error("Error al cargar categorías:", error));
-  }, []);
 
   // Manejar el cambio de entrada
   const handleChange = (e) => {
@@ -34,12 +25,9 @@ const CategoryModal = ({ onClose, onAddCategory, showStatusModal }) => {
       })
     .then((res) => res.json())
     .then((data) => {
-      onAddCategory(data);
-      localStorage.setItem("statusMessage", data.message);
-      localStorage.setItem("statusType", data.status);
+      fetchCategories();
+      showStatusModal(data.message, data.status);
       setFormData({ name: "" });
-      onClose();
-      window.location.href = "/admin/productos";
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -61,13 +49,8 @@ const CategoryModal = ({ onClose, onAddCategory, showStatusModal }) => {
         return res.json();
       })
       .then((data) => {
-        setCategories((prevCategories) =>
-          prevCategories.filter((category) => category.id !== categoryId)
-        );
-        localStorage.setItem("statusMessage", data.message);
-        localStorage.setItem("statusType", data.status);
-        onClose();
-        window.location.href = "/admin/productos";
+        fetchCategories();
+        showStatusModal(data.message, data.status);
       })
     .catch((error) => {
       showStatusModal(error.message, "error");
@@ -78,10 +61,10 @@ const CategoryModal = ({ onClose, onAddCategory, showStatusModal }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white overflow-y-auto p-4 rounded-lg w-full max-w-md max-h-[90vh]">
         <div className="flex mb-4">
-          <h1 className="text-md font-bold">Categorías</h1>
+          <h1 className="text-md font-semibold">Categorías</h1>
           <button
             onClick={onClose}
-            className="text-gray-600 hover:text-gray-800 text-xl ml-auto font-bold"
+            className="text-gray-600 hover:text-gray-800 text-xl ml-auto font-semibold"
           >
             &times;
           </button>
@@ -103,7 +86,7 @@ const CategoryModal = ({ onClose, onAddCategory, showStatusModal }) => {
           </div>
           <button
             type="submit"
-            className="w-full bg-sky-600 text-white font-bold text-sm py-2 px-4 rounded-md hover:bg-sky-700 transition-colors duration-300"
+            className="w-full bg-sky-600 text-white font-semibold text-sm py-2 px-4 rounded-md hover:bg-sky-700 transition-colors duration-300"
           >
             Añadir Categoría
           </button>
@@ -111,7 +94,7 @@ const CategoryModal = ({ onClose, onAddCategory, showStatusModal }) => {
 
         {/* Listado de categorías */}
         <div className="mt-4">
-          <h2 className="font-bold text-sm mb-2">Categorías existentes</h2>
+          <h2 className="font-semibold text-sm mb-2">Categorías existentes</h2>
           <ul className="space-y-2">
             {categories.map((category) => (
               <li

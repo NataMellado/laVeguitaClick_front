@@ -47,14 +47,14 @@ const OrderRow = ({
       {/* Fecha de Creación */}
       <td className="py-3 px-4 text-left">
         <div className="whitespace-nowrap truncate-ellipsis">
-          {new Date(order.created_at).toLocaleString()}
+          {new Date(order.created_at).toLocaleDateString()}
         </div>
       </td>
 
       {/* Fecha de Actualización */}
       <td className="py-3 px-4 text-left">
         <div className="whitespace-nowrap truncate-ellipsis">
-          {new Date(order.updated_at).toLocaleString()}
+          {new Date(order.updated_at).toLocaleDateString()}
         </div>
       </td>
 
@@ -98,8 +98,8 @@ const OrderRow = ({
                 {vehicle.license_plate} ({vehicle.vehicle_type})
               </option>
             ))}
-
           </select>
+          
         ) : (
           <div className="whitespace-nowrap truncate-ellipsis">
             {order.vehicle
@@ -111,12 +111,16 @@ const OrderRow = ({
 
       {/* Botones de acción */}
       <td className="py-3 px-4 text-center space-x-2">
+
+        {/* Detalles de la orden */}
         <button
           onClick={() => handleViewDetails(order.id)}
           className="text-blue-500 hover:underline"
         >
           <FontAwesomeIcon icon={faEye} />
         </button>
+
+        {/* Editar */}
         {!order.isEditing ? (
           <button
             onClick={(e) => handleEdit(e, order.id)}
@@ -132,6 +136,8 @@ const OrderRow = ({
             <FontAwesomeIcon icon={faSave} />
           </button>
         )}
+
+        {/* Eliminar */}
         <button
           onClick={() => handleDelete(order.id)}
           className="text-red-500 hover:underline"

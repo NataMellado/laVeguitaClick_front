@@ -6,7 +6,7 @@ const CustomButton = ({ label, onClick, icon }) => {
     <div className="relative ml-auto">
         <button
         onClick={onClick}
-        className="bg-sky-600 hover:bg-sky-700 transition-colors duration-300 text-white text-sm font-bold py-1 px-3 rounded flex items-center"
+        className="bg-sky-600 hover:bg-sky-700 transition-colors duration-300 text-white text-md font-semibold py-1 px-3 rounded flex items-center"
         >
         {label}
         {icon && <span className="ml-2">{icon}</span>}

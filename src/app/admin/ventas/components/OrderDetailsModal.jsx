@@ -4,12 +4,12 @@ import React from "react";
 const OrderDetailsModal = ({ order, onClose }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-4 rounded-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
+      <div className="bg-white p-4 rounded-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto">
         <div className="flex mb-4">
-          <h1 className="text-lg font-bold">Detalles de la Orden (ID: {order.id})</h1>
+          <h1 className="text-lg font-semibold">Detalles de la Orden (ID: {order.id})</h1>
           <button
             onClick={onClose}
-            className="text-gray-600 hover:text-gray-800 text-xl ml-auto font-bold"
+            className="text-gray-600 hover:text-gray-800 text-xl ml-auto font-semibold"
           >
             &times;
           </button>

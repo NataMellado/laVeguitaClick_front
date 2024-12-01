@@ -11,7 +11,7 @@ const AddDropdown = ({ options }) => {
 
       <button
         onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        className="bg-sky-600 hover:bg-sky-700 transition-colors duration-300 text-white text-sm font-bold py-1 px-3 rounded"
+        className="bg-sky-600 font-semibold  hover:bg-sky-700 transition-colors duration-300 text-white text-md py-1 px-3 rounded"
       >
         Agregar
         <FontAwesomeIcon icon={faChevronDown} className="font-black ps-2" />

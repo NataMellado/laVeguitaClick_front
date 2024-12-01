@@ -4,7 +4,7 @@ const useSupplierManagement = ({
   suppliers,
   setSuppliers,
   originalSuppliers,
-  setOriginalSuppliers,
+  fetchSuppliers,
   showStatusModal,
   startEditing,
   stopEditing,
@@ -66,11 +66,7 @@ const useSupplierManagement = ({
       .then((res) => res.json())
       .then((data) => {
         stopEditing();
-        setOriginalSuppliers((prevSuppliers) =>
-          prevSuppliers.map((supplier) =>
-            supplier.id === supplierId ? supplierToSave : supplier
-          )
-        );
+        fetchSuppliers();
         showStatusModal(data.message, data.status);
       })
       .catch((error) => {
@@ -85,12 +81,12 @@ const useSupplierManagement = ({
     })
       .then((res) => res.json())
       .then((data) => {
-        setSuppliers((prevSuppliers) =>
-          prevSuppliers.filter((supplier) => supplier.id !== supplierId)
-        );
+        stopEditing();
+        fetchSuppliers();
         showStatusModal(data.message, data.status);
       })
       .catch((error) => {
+        stopEditing();
         console.error("Error al eliminar el proveedor:", error);
         showStatusModal("Error al eliminar el proveedor", "error");
       });

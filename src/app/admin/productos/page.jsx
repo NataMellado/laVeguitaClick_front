@@ -5,15 +5,16 @@ import React, { useState, useEffect } from "react";
 import ProductTable from "./components/ProductTable";
 import ProductModal from "./components/ProductModal";
 import CategoryModal from "./components/CategoryModal";
-import StatusModal from "@/components/StatusModal";
-import ConfirmModal from "@/components/ConfirmModal";
+import StatusModal from "../../../components/StatusModal";
+import ConfirmModal from "../../../components/ConfirmModal";
 
 // Hooks
 import useFetchProducts from "./hooks/useFetchProducts";
+import useFetchCategories from "./hooks/useFetchCategories";
 import useProductManagement from "./hooks/useProductManagement";
-import useStatusModal from "@/hooks/useStatusModal";
-import useEditing from "@/hooks/useEditing";
-import AddDropdown from "@/components/AddDropdown";
+import useStatusModal from "../../../hooks/useStatusModal";
+import useEditing from "../../../hooks/useEditing";
+import AddDropdown from "../../../components/AddDropdown";
 
 const InventoryManagement = () => {
   // Estados
@@ -22,7 +23,8 @@ const InventoryManagement = () => {
 
   // Hooks
   const { showModal, message, status, showStatusModal, setShowModal } = useStatusModal();
-  const { products, setProducts, originalProducts, setOriginalProducts } = useFetchProducts(showStatusModal);
+  const { products, setProducts, originalProducts, fetchProducts } = useFetchProducts(showStatusModal);
+  const { categories, setCategories, fetchCategories } = useFetchCategories(showStatusModal);
   const { editingId, isEditing, startEditing, stopEditing } = useEditing();
   const {
     handleAddProduct,
@@ -39,7 +41,7 @@ const InventoryManagement = () => {
     products,
     setProducts,
     originalProducts,
-    setOriginalProducts,
+    fetchProducts,
     showStatusModal,
     startEditing,
     stopEditing,
@@ -62,7 +64,7 @@ const InventoryManagement = () => {
     <div className=" overflow-y-hidden">
       <div className="flex mb-3">
         {/* Título */}
-        <h1 className="text-md font-bold mb-2">Productos</h1>
+        <h1 className="text-lg font-semibold mb-2">Productos</h1>
 
         {/* Dropdown de agregar */}
         <AddDropdown options={addOptions} />
@@ -74,6 +76,7 @@ const InventoryManagement = () => {
           ...product,
           isEditing: product.id === editingId,
         }))}
+        categories={categories}
         handleChange={handleChange}
         handleEdit={handleEdit}
         handleSave={handleSave}
@@ -84,7 +87,8 @@ const InventoryManagement = () => {
       {isProductModalOpen && (
         <ProductModal
           onClose={() => setIsProductModalOpen(false)}
-          onAddProduct={handleAddProduct}
+          fetchProducts={fetchProducts}
+          categories={categories}
           showStatusModal={showStatusModal}
         />
       )}
@@ -93,7 +97,8 @@ const InventoryManagement = () => {
       {isCategoryModalOpen && (
         <CategoryModal
           onClose={() => setIsCategoryModalOpen(false)}
-          onAddCategory={handleAddCategory}
+          fetchCategories={fetchCategories}
+          categories={categories}
           showStatusModal={showStatusModal}
         />
       )}

@@ -1,36 +1,25 @@
 import { useState, useEffect } from "react";
 
-const useFetchSuppliers = (showStatusModal) => {
+const useFetchSuppliers = () => {
   const [suppliers, setSuppliers] = useState([]);
   const [originalSuppliers, setOriginalSuppliers] = useState([]);
 
+  const fetchSuppliers = async () => {
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/suppliers/");
+      const data = await res.json();
+      setSuppliers(data.suppliers);
+      setOriginalSuppliers(data.suppliers);
+    } catch (error) {
+      console.error("Error al cargar los proveedores:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchSuppliers = async () => {
-      try {
-        // Fetch para obtener los proveedores
-        const res = await fetch("http://127.0.0.1:8000/api/suppliers/");
-        const data = await res.json();
-        setSuppliers(data.suppliers);
-        setOriginalSuppliers(data.suppliers);
-
-        // Manejo de mensajes desde localStorage
-        const message = localStorage.getItem("statusMessage");
-        const status = localStorage.getItem("statusType");
-
-        if (message && status) {
-          showStatusModal(message, status);
-          localStorage.removeItem("statusMessage");
-          localStorage.removeItem("statusType");
-        }
-      } catch (error) {
-        console.error("Error al cargar los proveedores:", error);
-      }
-    };
-
     fetchSuppliers();
   }, []);
 
-  return { suppliers, setSuppliers, originalSuppliers, setOriginalSuppliers };
+  return { suppliers, setSuppliers, originalSuppliers, setOriginalSuppliers, fetchSuppliers };
 };
 
 export default useFetchSuppliers;

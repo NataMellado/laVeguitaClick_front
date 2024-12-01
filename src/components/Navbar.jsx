@@ -2,14 +2,14 @@
 import React from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser, faCartShopping, faTable} from "@fortawesome/free-solid-svg-icons";
-import { useCart } from "@/context/CartContext";
-import { useUser } from "@/context/UserContext";
+import { faUser, faCartShopping, faTable, faSignOutAlt} from "@fortawesome/free-solid-svg-icons";
+import { useCart } from "../context/CartContext";
+import { useUser } from "../context/UserContext";
 import CartModal from "./CartModal";
 
 const Navbar = () => {
   const { cart } = useCart();
-  const { user, loading } = useUser();
+  const { user, logout, loading } = useUser();
   const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
 
@@ -50,11 +50,18 @@ const Navbar = () => {
               >
                 <FontAwesomeIcon icon={faUser} style={{ width: '20px', height: '20px' }} />
                 <p className="hidden sm:flex p-0 m-0">
-                  {user ? user.usuario : "Ingresar"}
+                  {user ? user.nombre : "Ingresar"}
                 </p>
               </a>
             )}
           </div>
+
+          {/* Logout */}
+          {user && (
+            <button onClick={logout} className="flex items-center gap-3  w-full text-left  text-gray-700 transition duration-150 hover:text-green-600">
+            <FontAwesomeIcon icon={faSignOutAlt} style={{ width: '20px', height: '20px' }} />
+          </button>
+          )}
 
           {/* Enlace al panel de administración */}
           {user && user.rol === "gerente" && (

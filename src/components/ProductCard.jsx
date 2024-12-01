@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useCart } from "@/context/CartContext";
+import { useCart } from "../context/CartContext";
 
 const ProductCard = ({ product }) => {
   const { cart, addToCart, removeFromCart, decreaseFromCart } = useCart();
@@ -47,7 +47,7 @@ const ProductCard = ({ product }) => {
         <p className="text-gray-700 text-sm line-clamp-1">
           {product.description}
         </p>
-        <p className="font-extrabold mt-2">${product.price}</p>
+        <p className="font-semibold mt-2">${product.price}</p>
 
         {/* Controles de cantidad */}
         <div className="mt-4">

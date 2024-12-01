@@ -1,14 +1,14 @@
 "use client";
-import { Nunito } from "next/font/google";
+import { Work_Sans } from "next/font/google";
 import "./globals.css";
 import { redirect, usePathname } from "next/navigation";
 import Navbar from "../components/Navbar";
 import AdminSidebar from "../components/AdminSidebar";
-import { CartProvider } from "@/context/CartContext";
-import { UserProvider, useUser } from "@/context/UserContext";
+import { CartProvider } from "../context/CartContext";
+import { UserProvider, useUser } from "../context/UserContext";
 import { useEffect, useState } from "react";
 
-const openSans = Nunito({
+const openSans = Work_Sans({
   subsets: ["latin"],
 });
 

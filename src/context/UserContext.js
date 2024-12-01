@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
-import { fetchUserSession } from "@/utils/auth";
+import { fetchUserSession } from "../utils/auth";
 import { redirect } from "next/navigation";
 
 const UserContext = createContext();

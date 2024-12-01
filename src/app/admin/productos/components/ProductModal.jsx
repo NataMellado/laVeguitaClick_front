@@ -1,8 +1,7 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
-  const [categories, setCategories] = useState([]);
+const ProductModal = ({ onClose, fetchProducts, showStatusModal, categories }) => {
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -13,15 +12,7 @@ const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
     is_featured: false,
   });
 
-  // Obtener categorías al cargar el componente
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/categories/")
-      .then((res) => res.json())
-      .then((data) => setCategories(data.categories))
-      .catch((error) => console.error("Error al cargar categorías:", error));
-  }, []);
-
-  // Manejar el cambio de entrada
+  // Manejar cambios en los inputs
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prevData) => ({
@@ -29,6 +20,7 @@ const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+
 
   // Añadir un nuevo producto
   const handleSubmit = (e) => {
@@ -42,9 +34,8 @@ const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
       })
     .then((res) => res.json())
     .then((data) => {
-        onAddProduct(data);
-        localStorage.setItem("statusMessage", data.message);
-        localStorage.setItem("statusType", "success");
+        fetchProducts();
+        showStatusModal(data.message, data.status);
         setFormData({
           name: "",
           price: "",
@@ -55,7 +46,6 @@ const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
           is_featured: false,
         });
         onClose();
-        window.location.href = "/admin/productos";
       })
     .catch((error) => {
       console.error("Error:", error);
@@ -67,10 +57,10 @@ const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
     <div className="fixed  inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white overflow-y-auto p-4 rounded-lg  w-full max-w-md max-h-[90vh]">
         <div className="flex  mb-4">
-          <h1 className="text-md font-bold">Añadir Producto</h1>
+          <h1 className="text-md font-semibold">Añadir Producto</h1>
           <button
             onClick={onClose}
-            className="text-gray-600 hover:text-gray-800 text-xl ml-auto font-bold"
+            className="text-gray-600 hover:text-gray-800 text-xl ml-auto font-semibold"
           >
             &times;
           </button>
@@ -183,7 +173,7 @@ const ProductModal = ({ onClose, onAddProduct, showStatusModal }) => {
           {/* Botón para añadir producto */}
           <button
             type="submit"
-            className="w-full bg-sky-600 text-white font-bold text-sm py-2 px-4 rounded-md hover:bg-sky-700 transition-colors duration-300"
+            className="w-full bg-sky-600 text-white font-semibold text-sm py-2 px-4 rounded-md hover:bg-sky-700 transition-colors duration-300"
           >
             Añadir Producto
           </button>

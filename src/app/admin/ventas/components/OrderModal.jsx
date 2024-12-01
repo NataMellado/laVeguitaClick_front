@@ -96,12 +96,12 @@ const OrderModal = ({ onClose, onAddOrder, showStatusModal }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white overflow-y-auto p-4 rounded-lg w-full max-w-md max-h-[90vh]">
+      <div className="bg-white overflow-y-auto p-4 rounded-lg w-full max-w-lg max-h-[90vh]">
         <div className="flex mb-4">
-          <h1 className="text-md font-bold">Añadir Venta</h1>
+          <h1 className="text-md font-semibold">Añadir Venta</h1>
           <button
             onClick={onClose}
-            className="text-gray-600 hover:text-gray-800 text-xl ml-auto font-bold"
+            className="text-gray-600 hover:text-gray-800 text-xl ml-auto font-semibold"
           >
             &times;
           </button>
@@ -176,13 +176,13 @@ const OrderModal = ({ onClose, onAddOrder, showStatusModal }) => {
           )}
 
           {/* Total */}
-          <div className="text-right font-bold text-lg">
+          <div className="text-right font-semibold text-lg">
             Total: ${total.toFixed(0)}
           </div>
 
           <button
             type="submit"
-            className="w-full bg-sky-600 text-white font-bold py-2 px-4 rounded-md hover:bg-sky-700 transition-colors duration-300"
+            className="w-full bg-sky-600 text-white font-semibold py-2 px-4 rounded-md hover:bg-sky-700 transition-colors duration-300"
           >
             Guardar Venta
           </button>

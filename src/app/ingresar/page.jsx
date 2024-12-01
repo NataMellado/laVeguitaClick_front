@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { useState } from "react";
-import { useUser } from "@/context/UserContext";
+import { useUser } from "../../context/UserContext";
 
 const IngresarPage = () => {
 

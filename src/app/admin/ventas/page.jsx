@@ -4,15 +4,15 @@ import React, { useState, useEffect } from 'react';
 // Componentes
 import OrderTable from './components/OrderTable';
 import OrderModal from './components/OrderModal';
-import StatusModal from '@/components/StatusModal';
-import ConfirmModal from '@/components/ConfirmModal';
+import StatusModal from '../../../components/StatusModal';
+import ConfirmModal from '../../../components/ConfirmModal';
 
 // Hooks
 import useFetchOrders from './hooks/useFetchOrders';
 import useOrderManagement from './hooks/useOrderManagement';
-import useStatusModal from '@/hooks/useStatusModal';
-import useEditing from '@/hooks/useEditing';
-import CustomButton from '@/components/CustomButton';
+import useStatusModal from '../../../hooks/useStatusModal';
+import useEditing from '../../../hooks/useEditing';
+import CustomButton from '../../../components/CustomButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
@@ -23,7 +23,7 @@ const OrderManagement = () => {
 
   // Hooks
   const { showModal, message, status, showStatusModal, setShowModal } = useStatusModal();
-  const { orders, setOrders, originalOrders, setOriginalOrders } = useFetchOrders(showStatusModal);
+  const { orders, setOrders, originalOrders, setOriginalOrders, fetchOrders } = useFetchOrders(showStatusModal);
   const { editingId, isEditing, startEditing, stopEditing } = useEditing();
   const {
     handleAddOrder,
@@ -40,6 +40,7 @@ const OrderManagement = () => {
     setOrders,
     originalOrders,
     setOriginalOrders,
+    fetchOrders,
     showStatusModal,
     startEditing,
     stopEditing,
@@ -53,7 +54,7 @@ const OrderManagement = () => {
     <div className="overflow-y-hidden">
       <div className='flex mb-3'>
         {/* Título */}
-        <h1 className="text-md font-bold mb-2">Ventas</h1>
+        <h1 className="text-lg font-semibold mb-2">Ventas</h1>
 
         {/* Botón de añadir orden */}
         <CustomButton

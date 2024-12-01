@@ -68,7 +68,7 @@ const CartModal = ({ cartItems, isOpen, toggleModal }) => {
 
         {/* Modal Footer */}
         <div className="flex justify-between items-center  pt-4 mt-auto">
-          <p className="text-lg font-bold">
+          <p className="text-lg font-semibold">
             Total: $<span>{totalAmount}</span>
           </p>
           <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">

@@ -5,7 +5,7 @@ const useProductManagement = ({
   products,
   setProducts,
   originalProducts,
-  setOriginalProducts,
+  fetchProducts,
   showStatusModal,
   startEditing,
   stopEditing,
@@ -72,11 +72,7 @@ const useProductManagement = ({
       .then((res) => res.json())
       .then((data) => {
         stopEditing();
-        setOriginalProducts((prevOriginals) =>
-          prevOriginals.map((product) =>
-            product.id === productId ? { ...productToSave } : product
-          )
-        );
+        fetchProducts();
         showStatusModal(data.message, data.status);
       })
       .catch((error) => {
@@ -88,23 +84,17 @@ const useProductManagement = ({
   const handleDelete = (productId) => {
     fetch(`http://127.0.0.1:8000/api/products/${productId}/`, {
       method: "DELETE",
-    })
-      .then((res) => {
-        if (!res.ok) {
-          return res.json().then((data) => {
-            throw { message: data.message, status: data.status };
-          });
-        }
-        return res.json();
-      })
+    })     
+      .then((res) => res.json())
       .then((data) => {
-        setProducts((prevProducts) =>
-          prevProducts.filter((product) => product.id !== productId)
-        );
+        stopEditing();
+        fetchProducts();
         showStatusModal(data.message, data.status);
       })
       .catch((error) => {
-        showStatusModal(error.message || "Error desconocido", error.status || "error");
+        stopEditing();
+        console.error("Error al eliminar el producto:", error);
+        showStatusModal("Error al eliminar el producto", "error");
       });
   };
 

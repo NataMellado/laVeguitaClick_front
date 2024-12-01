@@ -4,15 +4,15 @@ import React, { useState, useEffect } from 'react';
 // Componentes
 import SupplierTable from './components/SupplierTable';
 import SupplierModal from './components/SupplierModal';
-import StatusModal from '@/components/StatusModal';
-import ConfirmModal from '@/components/ConfirmModal';
+import StatusModal from '../../../components/StatusModal';
+import ConfirmModal from '../../../components/ConfirmModal';
 
 // Hooks
 import useFetchSuppliers from './hooks/useFetchSuppliers';
 import useSupplierManagement from './hooks/useSupplierManagement';
-import useStatusModal from '@/hooks/useStatusModal';
-import useEditing from '@/hooks/useEditing';
-import CustomButton from '@/components/CustomButton';
+import useStatusModal from '../../../hooks/useStatusModal';
+import useEditing from '../../../hooks/useEditing';
+import CustomButton from '../../../components/CustomButton';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
@@ -23,7 +23,7 @@ const SupplierManagement = () => {
 
   // Hooks
   const { showModal, message, status, showStatusModal, setShowModal } = useStatusModal();
-  const { suppliers, setSuppliers, originalSuppliers, setOriginalSuppliers } = useFetchSuppliers(showStatusModal);
+  const { suppliers, setSuppliers, originalSuppliers, fetchSuppliers } = useFetchSuppliers(showStatusModal);
   const { editingId, isEditing, startEditing, stopEditing } = useEditing();
   const {
     handleAddSupplier,
@@ -39,7 +39,7 @@ const SupplierManagement = () => {
     suppliers,
     setSuppliers,
     originalSuppliers,
-    setOriginalSuppliers,
+    fetchSuppliers,
     showStatusModal,
     startEditing,
     stopEditing,
@@ -54,7 +54,7 @@ const SupplierManagement = () => {
     <div className="overflow-y-hidden">
       <div className='flex mb-3'>
         {/* Tìtulo */}
-        <h1 className="text-md font-bold mb-2">Proveedores</h1>
+        <h1 className="text-lg font-semibold mb-2">Proveedores</h1>
 
         {/* Botón de añadir proveedor */}
         <CustomButton
@@ -88,7 +88,7 @@ const SupplierManagement = () => {
       {isSupplierModalOpen && (
         <SupplierModal
           onClose={() => setIsSupplierModalOpen(false)}
-          onAddSupplier={handleAddSupplier}
+          fetchSuppliers={fetchSuppliers}
           showStatusModal={showStatusModal}
         />
       )}
